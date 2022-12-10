@@ -1,0 +1,153 @@
+// Place all the styles related to the rooms controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+.dm-container{
+  height: 100vh;
+  width: 28%;
+  margin: 0 0 10px 25%;
+  float: left;
+  border-right:1px solid rgba(161, 161, 161, 0.247);
+  position: fixed;
+}
+.dm-container h2{
+  padding-top: 10px;
+  width: 28%;
+  display: block;
+  position: fixed;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  margin-bottom: 30px;
+  color:black;
+  text-align: left;
+  font-size: 20px;
+  border-bottom: 1px solid rgba(161, 161, 161, 0.247);
+  z-index: 100;
+  background-color: #fff;
+}
+.room-users{
+  position: fixed;
+  margin-top: 50px;
+  text-align: left;
+  line-height: 40px;
+  width: 28%;
+}
+.room-users h5{
+  margin-left: 70px;
+  font-size: 16px;
+}
+.room-user{
+  height: 70px;
+  width: 100%;
+  border-bottom: 1px solid rgba(161, 161, 161, 0.247);
+}
+.message-container{
+  position: relative;
+  height: 100vh;
+  width: 37%;
+  margin: 0 0 10px 53%;
+  border-right: 1px solid rgba(161, 161, 161, 0.247);
+}
+.message-container h2{
+  padding-top: 10px;
+  width: 37%;
+  display: block;
+  position: fixed;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  margin-bottom: 30px;
+  color:black;
+  text-align: left;
+  font-size: 20px;
+  border-bottom: 1px solid rgba(161, 161, 161, 0.247);
+  z-index: 100;
+  background-color: #fff;
+}
+.dm{
+  border-right: 1px solid rgba(161, 161, 161, 0.247);
+  border-left: 1px solid rgba(161, 161, 161, 0.247);
+  display: block;
+  width: 37%;
+}
+.message-container input[type="text"]{
+  margin-top: 10px;
+  width:80%;
+  background-color: rgba(161, 161, 161, 0.247);
+  outline: none;
+  height: 30px;
+  border-radius: 20px;
+  border: none;
+}
+.message-container button{
+  font-size: 18px;
+  background-color: #fff;
+  color:rgba(29,161,242,1.00);
+}
+.messages{
+  padding-top: 50px;
+  margin-bottom: 55px;
+  text-align: left;
+}
+.message{
+  margin-top: 10px;
+  min-height:50px;
+}
+.messages img{
+  float: left;
+  width: 40px;
+  height: 40px;
+  margin-left: 10px;
+  margin-right: 20px;
+  border-radius: 50px;
+  object-fit: cover;
+}
+.message-right{
+  padding-top:5px;
+  padding-bottom: 5px;
+  margin-left: 60px;
+  width: 80%;
+  border: 1px solid rgba(161, 161, 161, 0.459);
+  border-radius: 10px;
+}
+.message-form{
+  z-index: 100;
+  position: absolute;
+  width: 37%;
+  position: fixed;
+  border-top:1px solid rgba(161, 161, 161, 0.247);
+  top:92%;
+  margin: 0 0 0 0;
+  background-color: #fff;
+  height: 60px;
+  border-right: 1px solid rgba(161, 161, 161, 0.247);
+}
+.message-form input[type="text"]{
+  margin-left: 10px;
+  float: left;
+  color: black;
+}
+.message-form button{
+  top: 15px;
+  position: absolute;
+  outline: none;
+}
+
+@media screen and (max-width: 1170px){
+  .dm-container{
+    width: 28%;
+    margin: 0 0 10px 20%;
+  }
+
+  .message-container{
+    margin: 0 0 10px 48%;
+    width: 33%;
+  }
+  .message-container h2{
+    width: 33%;
+  }
+  .message-form{
+    width: 33%;
+  }
+  .message-right{
+    width: 75%;
+  }
+}

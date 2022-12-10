@@ -1,0 +1,47 @@
+<%= stylesheet_link_tag 'users', :media => "all" %>
+<div class="edit-user">
+<h2>
+サインアップ 
+</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= render "users/shared/error_messages", resource: resource %>
+  <div class="field" style="padding-top:70px;">
+    <%= f.label :ユーザーネーム %><br />
+    <%= f.text_field :name, autofocus: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :メール %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
+  <br>
+  <div class="image-field">
+    <%= f.label :image, class: "main-form__image" do %>
+      アイコン<i class="far fa-image"></i>
+      <%= f.file_field :image, class: "default" %>
+    <% end %>
+  </div>
+  <br>
+  <div class="field">
+    <%= f.label :パスワード %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "new-password" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :パスワード確認 %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "サインアップ " %>
+  </div>
+<% end %>
+
+</div>
+<div class="search-container">
+    <p>Copyright © GeekSalon All Rights Reserved.</p>
+</div>

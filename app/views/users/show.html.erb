@@ -1,0 +1,102 @@
+<%= stylesheet_link_tag 'users', :media => "all" %>
+<div class="user-container">
+  <h2>
+    <%= link_to tweets_path do %>
+      <i class="fas fa-arrow-left" style="color:rgba(29,161,242,1.00);"></i>
+    <% end %>
+    　　<%= @user.name %>
+  </h2>
+  <p class="home-image"><%= image_tag @user.home_image_url, size: "250x200" if @user.home_image? %></p>
+  <p class="show-icon"><%= image_tag @user.image_url, size: "250x200" if @user.image? %></p>
+  <div class="plofile-right">
+    <% if current_user.id == @user.id %>
+      <%= link_to "プロフィールを編集", edit_user_registration_path %>
+    <% else %>
+      <%= render partial: "relationships/follow", locals: { user: @user }%>
+    <% end %>
+  </div>
+  <div class="plofile-left">
+    <h3><%= @user.name %></h3>
+    <p><%= @user.profile %></p>
+    <br>
+    <%= @user.followings.count %> フォロー中
+    <%= @user.followers.count %> フォロワー
+  </div>
+  <% if @user.id == current_user.id %>
+
+  <% else %>
+    <% if @isRoom == true %>
+      <p><a href="/rooms/<%= @roomId %>"><i class="far fa-envelope"></i></a>
+    <% else %>
+      <%= form_for @room do |f| %>
+        <%= fields_for @entry do |e| %>
+          <%= e.hidden_field :user_id, :value=> @user.id %>
+        <% end %>
+        <%= f.submit "チャットを始める" %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <%= form_with model:[@user,@review],local: true do |f| %>
+    <%= f.text_area :body%>
+    <%= f.submit %>
+  <% end %>
+  <h3>評価</h3>
+  <% @reviews.each do |r| %>
+    <%= r.body %>
+  <% end %>  
+
+  <div class="plofile-bottom">
+    <p>ツイート</p>
+  </div>
+</div>
+
+
+<div class="tweet-container">
+  <div class="tweets">
+    <% @tweets.each do |t| %>
+      <div class="tweet">
+        <div class="left-container">
+          <div class="icon">
+            <%= image_tag t.user.image_url.to_s, size: "250×200" if t.user.image? %>
+          </div>
+        </div>
+        <div class="right-container">
+          <div class="user-name">
+            <a href="/users/<%= t.user.id %>"><%= t.user.name %></a>
+          </div>
+          <p class="time">・<%= t.created_at.to_s(:datetime_jp) %></p>
+          <br>
+          <%= t.body %>
+          <br>
+          <%= image_tag t.image_url, size: "250x200" if t.image? %>
+          <br>
+          <div class="tool">
+            <% if current_user.already_liked?(t) %>
+              <%=link_to tweet_like_path(id: t.id, tweet_id: t.id), method: :delete do%>
+                <i class="fas fa-heart"></i><%=t.likes.count%>
+              <%end%>
+            <% else %>
+              <%=link_to tweet_likes_path(id: t.id, tweet_id: t.id), method: :post do%>
+                <i class="far fa-heart"></i><%=t.likes.count%>
+              <%end%>
+            <% end %>
+            <%= link_to tweet_path(t.id) do %>
+              <i class="fas fa-file-alt"></i>
+            <% end %>
+            <% if user_signed_in? && current_user.id == t.user_id %> 
+              <%= link_to edit_tweet_path(t.id) do %>
+                <i class="fas fa-wrench"></i>
+              <% end %>
+              <%= link_to tweet_path(t.id), method: :delete do %>
+                <i class="fas fa-trash-alt"></i>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="search-container">
+  <p>Copyright © GeekSalon All Rights Reserved.</p>
+</div>

@@ -1,0 +1,45 @@
+<%= stylesheet_link_tag 'rooms', :media => "all" %>
+<div class="dm-container">
+  <h2>メッセージ</h2>
+  <div class="room-users">
+    <% @entries.each do |e| %>
+      <div class="room-user">
+        <div class="icon">
+          <%= image_tag e.user.image_url.to_s, size: "250×200" if e.user.image? %>
+        </div>
+        <h5><%= e.user.name%></h5>
+      </div>
+    <% end %>
+  </div>
+  
+</div>
+<div class="message-container">
+  <h2 class="dm">DM</h2>
+  <div class="messages">
+    <% if @messages.present? %>
+        <% @messages.each do |m| %>
+          <div class="message">
+            <%= image_tag m.user.image_url.to_s, size: "250×200" if m.user.image? %>
+            <div class="message-right">
+              <strong><%= m.content %></strong>
+            </div>
+            <br>
+          </div>
+        <% end %>
+    <% else %>
+      <h3 class="text-center">メッセージはまだありません</h3>
+    <% end %>
+  </div>
+  <div class="message-form">
+    <%= form_for @message do |f| %>
+      <%= f.text_field :content, :placeholder => "メッセージを入力して下さい" , :size => 70 %>
+      <%= f.hidden_field :room_id, :value => @room.id %>
+      <br>
+      <%= f.button :type => "submit", style: 'border-style: none;' do %>
+        <i class='far fa-paper-plane'></i>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+

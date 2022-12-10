@@ -1,0 +1,87 @@
+<%= stylesheet_link_tag 'index', :media => "all" %>
+<div class="index">
+
+  <div class="tweets-container">
+  <h2>ホーム</h2>
+    <div class="post-container">
+      <%= link_to user_path(current_user.id) do %>
+        <div class="icon">
+          <%= image_tag current_user.image_url, size: "250x200" if current_user.image? %>
+        </div>
+      <% end %>
+      <%= form_for :tweet, url: '/tweets' do |f| %>
+        <br>
+        <%= f.text_area :body, :size => 140, :placeholder=>"いまどうしてる？", :rows => "3" %>
+        <br>
+        <div class="image-field">
+          <%= f.label :image, class: "main-form__image" do %>
+            <i class="far fa-image image-icon"></i>
+            <%= f.file_field :image, class: "default" %>
+          <% end %>
+        </div>
+        <div class="button">
+          <%= f.submit "ツイートする" %>
+        </div>
+        <br>
+      <% end %>
+    </div>
+  <div class="tweets">
+    <% @tweets.each do |t| %>
+      <div class="tweet">
+        <div class="left-container">
+          <div class="icon">
+            <%= image_tag t.user.image_url.to_s, size: "250×200" if t.user.image? %>
+          </div>
+        </div>
+        <div class="right-container">
+          <div class="user-name">
+            <a href="/users/<%= t.user.id %>"><%= t.user.name %></a>
+          </div>
+          <p class="time">・<%= t.created_at.to_s(:datetime_jp) %></p>
+          <br>
+          <%= t.body %>
+          <br>
+          <%= image_tag t.image_url, size:"250×200" if t.image? %>
+          <br>
+          <div class="tool">
+            <% if current_user.already_liked?(t) %>
+              <%=link_to tweet_like_path(id: t.id, tweet_id: t.id), method: :delete do%>
+                <i class="fas fa-heart like"></i><%=t.likes.count%>
+              <%end%>
+            <% else %>
+              <%=link_to tweet_likes_path(id: t.id, tweet_id: t.id), method: :post do%>
+                <i class="far fa-heart unlike"></i><%=t.likes.count%>
+              <%end%>
+            <% end %>
+            <%= link_to tweet_path(t.id) do %>
+              <i class="fas fa-file-alt"></i>
+            <% end %>
+            <% if user_signed_in? && current_user.id == t.user_id %> 
+              <%= link_to edit_tweet_path(t.id) do %>
+                <i class="fas fa-wrench"></i>
+              <% end %>
+              <%= link_to tweet_path(t.id), method: :delete do %>
+                <i class="fas fa-trash-alt"></i>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+ 
+    <% end %>
+        <%= render partial: 'posts/new' %>
+        <%= render partial: 'posts/index' %>
+    
+  </div>
+  </div>
+  <div class="search-container">
+    <%= form_tag({controller:"tweets",action:"index"}, method: :get) do %>
+      <!--<%= text_field_tag :search, "",:placeholder=>"　　　キーワード検索"%>-->
+       <%= text_field_tag :search %>
+
+       <%= submit_tag '検索する'  %>
+    <% end %>
+    <p>Copyright © GeekSalon All Rights Reserved.</p>
+  </div>
+
+ </div>

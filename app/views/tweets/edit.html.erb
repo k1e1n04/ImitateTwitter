@@ -1,0 +1,37 @@
+<%= stylesheet_link_tag 'new', :media => "all" %>
+<h2>
+  <%= link_to :back do %>
+    <i class="fas fa-arrow-left" style="color:rgba(29,161,242,1.00);"></i>
+  <% end %>
+  　　ツイートする
+</h2>
+<div class="post-container">
+  <%= link_to  user_path(current_user.id) do %>
+    <div class="icon">
+      <%= image_tag current_user.image_url, size: "250x200" if current_user.image? %>
+    </div>
+  <% end %>
+  <%= form_for @tweet do |f| %>
+    <br>
+    <%= f.text_area :body, :size => 140, :placeholder=>"いまどうしてる？", :rows => "3" %>
+    <br>
+    <div class="image-field">
+      <%= f.label :image, class: "main-form__image" do %>
+        <i class="far fa-image image-icon"></i>
+        <%= f.file_field :image, class: "default" %>
+      <% end %>
+    </div>
+    <div class="button">
+      <%= f.submit "ツイートする" %>
+    </div>
+    <br>
+  <% end %>
+  <p class="text-focus-in" style="text-align:center;
+  font-size:30px;
+  font-weight: bold;
+  margin-top: 50px;">Twitter</p>
+</div>
+<div class="search-container">
+    <p>Copyright © GeekSalon All Rights Reserved.</p>
+</div>
+

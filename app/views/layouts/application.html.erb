@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Geektwitter</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css">
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div id="wrapper">
+      <header>
+        <h1><i class="fab fa-twitter"></i></h1>
+        <div class="header-list">
+          <% if current_user %>
+            <ul>
+              <li><%= link_to "ホーム", tweets_path %></li>
+              <li><%= link_to "プロフィール", user_path(current_user.id) %></li>
+              <li><%= link_to "メッセージ", users_path %></li>
+              <li><%= link_to 'ログアウト', destroy_user_session_path, method: :delete %></li>
+              <div class="tweet-button">
+                <li><%= link_to "ツイートする", new_tweet_path %></li>
+              </div>
+              <li>
+              <%= link_to  user_path(current_user.id) do %>
+                <div class="user-icon">
+                  <%= image_tag current_user.image_url, size: "250x200" if current_user.image? %>
+                  <p><%= current_user.name %></p>
+                </div>
+              <% end %>
+              </li>
+            </ul>
+          <% else %>
+            <ul>
+              <li><%= link_to "ログイン", tweets_path %></li>
+              <li><%= link_to "新規登録", new_user_registration_path %></li>
+            </ul>
+          <% end %>
+        </div>
+      </header>
+      <main>
+        <%= yield %>
+      </main>
+    </div>
+  </body>
+</html>

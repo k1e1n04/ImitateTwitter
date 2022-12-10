@@ -1,0 +1,76 @@
+<%= stylesheet_link_tag 'users', :media => "all" %>
+<div class="edit-user">
+<h2>
+<%= link_to :back do %>
+  <i class="fas fa-arrow-left" style="color:rgba(29,161,242,1.00);"></i>
+<% end %>
+　　プロフィールを編集
+</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= render "users/shared/error_messages", resource: resource %>
+
+  <div class="field" style="padding-top:70px;">
+    <%= f.label :ユーザーネーム %><br />
+    <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+  </div>
+  <br>
+  <div class="image-field">
+    <%= f.label :image, class: "main-form__image" do %>
+      アイコン<i class="far fa-image"></i>
+      <%= f.file_field :image, class: "default" %>
+    <% end %>
+  </div>
+  <br>
+  <div class="image-field">
+    <%= f.label :home_image, class: "main-form__image" do %>
+      ホーム画像<i class="far fa-image"></i>
+      <%= f.file_field :home_image, class: "default" %>
+    <% end %>
+  </div>
+  <br>
+  <div class="field">
+    <%= f.label :プロフィール %><br />
+    <%= f.text_area :profile, autofocus: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :メール %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :パスワード %><br />
+    <%= f.password_field :password, autocomplete: "new-password" %>
+    <% if @minimum_password_length %>
+      <br />
+      <em><%= @minimum_password_length %> characters minimum</em>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label :確認用パスワード %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :現在のパスワード %><br />
+    <%= f.password_field :current_password, autocomplete: "current-password" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "保存" %>
+  </div>
+<% end %>
+
+<h3>退会する</h3>
+<p><%= button_to "アカウントを削除", registration_path(resource_name), data: { confirm: "本当によろしいですか？" }, method: :delete %></p>
+
+</div>
+<div class="search-container">
+    <p>Copyright © GeekSalon All Rights Reserved.</p>
+</div>

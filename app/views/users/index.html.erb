@@ -1,0 +1,13 @@
+<%= stylesheet_link_tag 'users', :media => "all" %>
+<div class="user-container">
+  <% current_user.followings.each do |t| %>
+    <div class="user">
+      <p class="index-icon"><%= image_tag t.image_url, size: "250x200" if t.image? %></p>
+      <a href="/users/<%= t.id %>"><h3 style="color:black;"><%= t.name %></h3></a>
+      <p class="plofile"><%= t.profile %></p>
+    </div>
+  <% end %>
+</div>
+<div class="search-container">
+  <p>Copyright © GeekSalon All Rights Reserved.</p>
+</div>

@@ -1,0 +1,120 @@
+<%= javascript_pack_tag "shows" %>
+<div class="index">
+<div class="tweet-container">
+<h2>
+<%= link_to tweets_path do %>
+  <i class="fas fa-arrow-left" style="color:rgba(29,161,242,1.00);"></i>
+<% end %>
+　　ツイートする
+</h2>
+<div id="show-tweet">
+  <div class="left-container">
+    <div class="icon">
+      <%= image_tag @tweet.user.image_url, size: "250x200" if @tweet.user.image? %>
+    </div>
+  </div>
+  <div class="right-container">
+    <div class="user-name">
+      <a href="/users/<%= @tweet.user.id %>"><%= @tweet.user.name %></a>
+    </div>
+    <p class="time">・<%= @tweet.created_at.to_s(:datetime_jp) %></p>
+    <br>
+    <%= @tweet.body %>
+    <br>
+    <%= image_tag @tweet.image_url, size: "250x200" if @tweet.image? %>
+    <div class="tool">
+      <% if current_user.already_liked?(@tweet) %>
+        <%=link_to tweet_like_path(id: @tweet.id, tweet_id: @tweet.id), method: :delete do%>
+          <i class="fas fa-heart"></i><%=@tweet.likes.count%>
+        <%end%>
+      <% else %>
+        <%=link_to tweet_likes_path(id: @tweet.id, tweet_id: @tweet.id), method: :post do%>
+          <i class="far fa-heart"></i><%=@tweet.likes.count%>
+        <%end%>
+      <% end %>
+      <% if user_signed_in? && current_user.id == @tweet.user_id %> 
+        <%= link_to edit_tweet_path(@tweet.id) do %>
+          <i class="fas fa-wrench"></i>
+        <% end %>
+        <%= link_to tweet_path(@tweet.id), method: :delete do %>
+          <i class="fas fa-trash-alt"></i>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<select name="color">
+  <option value="white"></option>
+  <option value='#A8A2C0'>Purpule</div>
+  <option value='#447F95'>Blue</div>
+  <option value='#AD1F64'>Red</div>
+</select>
+
+
+
+  <div class="post-container">
+    <% if user_signed_in? %>
+      <%= link_to  user_path(current_user.id) do %>
+        <div class="icon">
+          <%= image_tag current_user.image_url, size: "250x200" if current_user.image? %>
+        </div>
+      <% end %>
+      <%= form_with(model: [@tweet, @comment], local: true) do |f| %>
+        <%= f.text_area :comment%>
+        <div class="button">
+          <%= button_tag type: "submit" do %>
+            <i class="far fa-comments"></i> コメントする
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+
+<div class="comment-wrapper">
+  <% @comments.each do |c| %>
+    <div class="tweet">
+      <div class="left-container">
+        <div class="icon">
+          <%= image_tag c.user.image_url, size: "250×200" if c.user.image? unless c.user.blank?%>
+        </div>
+      </div>
+      <div class="right-container">
+        <div class="user-name">
+          <a href="/users/<%= c.user.id unless c.user.blank?%>"><%= c.user.name unless c.user.blank? %></a>
+        </div>
+        <p class="time">・<%= c.created_at unless c.created_at.blank? %></p>
+        <br>
+        <% if current_user.id == c.user.id %>
+          <!--<%= form_with url:tweet_comment_path(id: c.id, tweet_id: @tweet.id)  do |form| %>
+            <%= form.text_field :comment,:value=> c.comment %>
+            <%= form.submit %>
+          <% end %>-->
+          <div class="post-container">
+            <%= form_for [@tweet, c] do |form| %>
+              <%= form.text_area :comment,:value=> c.comment %>
+              <div class="button">
+                <%= form.submit "コメントを編集"%>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <%= c.comment unless c.comment.blank? %>
+        <% end %>
+        <br>
+        <%= link_to tweet_comment_path(@tweet, c), data: {confirm: '本当に削除しますか？'}, method: :delete do %>
+          <i class="fas fa-trash-alt"></i>
+        <% end %>
+      </div>
+      <br>
+    </div>
+      <br>
+  <% end %>
+</div>
+
+<div class="search-container">
+    <p>Copyright © GeekSalon All Rights Reserved.</p>
+</div>
+</div>
+</div>
